@@ -1,0 +1,1660 @@
+include "TriggerLibs/NativeLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library: FS Cortex Additions
+//--------------------------------------------------------------------------------------------------
+// Validating: templates
+
+// Variable Declarations
+int[18][4] lib26956AAF_gv_f6Dialog;
+int lib26956AAF_gv_ultimateAdmin;
+playergroup lib26956AAF_gv_blessed;
+playergroup lib26956AAF_gv_dominated;
+playergroup lib26956AAF_gv_mineralCapped;
+playergroup lib26956AAF_gv_gasCapped;
+int[17] lib26956AAF_gv_f7Dialog;
+int[17] lib26956AAF_gv_f7DialogItems;
+string[17][17] lib26956AAF_gv_messages;
+int[17] lib26956AAF_gv_players;
+int[17] lib26956AAF_gv_f8Dialog;
+int[17] lib26956AAF_gv_f8DialogItems;
+string[17][17] lib26956AAF_gv_messages2;
+int[17] lib26956AAF_gv_players2;
+int[17] lib26956AAF_gv_dialog;
+int[17] lib26956AAF_gv_dialogItem;
+int[17] lib26956AAF_gv_reverting;
+int[17] lib26956AAF_gv_revertDialog;
+int[17] lib26956AAF_gv_revertDialogItem;
+
+// Function Declarations
+int lib26956AAF_gf_GetPlayerFromSelected2 (int lp_Player);
+int lib26956AAF_gf_ConvertStringToCatalog2 (string lp_String);
+void lib26956AAF_gf_FieldDisplay2 (int lp_Catalog, string lp_CatalogEntry, int lp_Player);
+void lib26956AAF_gf_AddToList2 (int lp_Spacing, string lp_Field, int lp_Display, string lp_Scope, int lp_Catalog, string lp_Entry, string lp_FieldPath);
+void lib26956AAF_gf_FieldDisplay3 (int lp_Catalog, string lp_CatalogEntry, int lp_Player);
+void lib26956AAF_gf_AddToList4 (string lp_Field, string lp_Scope, int lp_Catalog, string lp_Entry, string lp_FieldPath, int lp_Player2);
+int lib26956AAF_gf_convertstringtoallystat (string lp_Input);
+bool lib26956AAF_gf_convertstringtoonoff (string lp_input);
+
+// Trigger Declarations
+trigger lib26956AAF_gt_XP;
+trigger lib26956AAF_gt_Beginus;
+trigger lib26956AAF_gt_F6;
+trigger lib26956AAF_gt_MessageSaver;
+trigger lib26956AAF_gt_UP;
+trigger lib26956AAF_gt_DOWN;
+trigger lib26956AAF_gt_F7;
+trigger lib26956AAF_gt_MessageSaver2;
+trigger lib26956AAF_gt_UP2;
+trigger lib26956AAF_gt_DOWN2;
+trigger lib26956AAF_gt_F8;
+trigger lib26956AAF_gt_ExitButton2;
+trigger lib26956AAF_gt_DEresourcecap;
+trigger lib26956AAF_gt_DEWorkage;
+trigger lib26956AAF_gt_FSTint;
+trigger lib26956AAF_gt_FSAnim;
+trigger lib26956AAF_gt_FSColor;
+trigger lib26956AAF_gt_alliance;
+trigger lib26956AAF_gt_GlobalAggro;
+trigger lib26956AAF_gt_ResourceRemovalService;
+trigger lib26956AAF_gt_DamageFix;
+trigger lib26956AAF_gt_ControlGroup;
+trigger lib26956AAF_gt_ControlGroup2;
+trigger lib26956AAF_gt_ControlGroup3;
+trigger lib26956AAF_gt_ControlGroup4;
+trigger lib26956AAF_gt_ControlGroup5;
+trigger lib26956AAF_gt_ControlGroup6;
+trigger lib26956AAF_gt_ControlGroup7;
+trigger lib26956AAF_gt_ControlGroup8;
+trigger lib26956AAF_gt_ControlGroup9;
+trigger lib26956AAF_gt_ControlGroup0;
+
+// Library Initialization
+void lib26956AAF_InitVariables ();
+
+//--------------------------------------------------------------------------------------------------
+// Library: FS Cortex Additions
+//--------------------------------------------------------------------------------------------------
+// Validating: templates
+
+// External Library Initialization
+void lib26956AAF_InitLibraries () {
+    libNtve_InitVariables();
+}
+
+// Variable Initialization
+bool lib26956AAF_InitVariables_completed = false;
+
+void lib26956AAF_InitVariables () {
+    int init_i;
+    int init_j;
+
+    if (lib26956AAF_InitVariables_completed) {
+        return;
+    }
+
+    lib26956AAF_InitVariables_completed = true;
+
+    for (init_i = 0; init_i <= 17; init_i += 1) {
+        for (init_j = 0; init_j <= 3; init_j += 1) {
+            lib26956AAF_gv_f6Dialog[init_i][init_j] = c_invalidDialogId;
+        }
+    }
+    lib26956AAF_gv_ultimateAdmin = -1;
+    lib26956AAF_gv_blessed = PlayerGroupEmpty();
+    lib26956AAF_gv_dominated = PlayerGroupEmpty();
+    lib26956AAF_gv_mineralCapped = PlayerGroupEmpty();
+    lib26956AAF_gv_gasCapped = PlayerGroupEmpty();
+    for (init_i = 0; init_i <= 16; init_i += 1) {
+        lib26956AAF_gv_f7Dialog[init_i] = c_invalidDialogId;
+    }
+    for (init_i = 0; init_i <= 16; init_i += 1) {
+        lib26956AAF_gv_f7DialogItems[init_i] = c_invalidDialogControlId;
+    }
+    for (init_i = 0; init_i <= 16; init_i += 1) {
+        for (init_j = 0; init_j <= 16; init_j += 1) {
+            lib26956AAF_gv_messages[init_i][init_j] = "";
+        }
+    }
+    for (init_i = 0; init_i <= 16; init_i += 1) {
+        lib26956AAF_gv_f8Dialog[init_i] = c_invalidDialogId;
+    }
+    for (init_i = 0; init_i <= 16; init_i += 1) {
+        lib26956AAF_gv_f8DialogItems[init_i] = c_invalidDialogControlId;
+    }
+    for (init_i = 0; init_i <= 16; init_i += 1) {
+        for (init_j = 0; init_j <= 16; init_j += 1) {
+            lib26956AAF_gv_messages2[init_i][init_j] = "";
+        }
+    }
+    for (init_i = 0; init_i <= 16; init_i += 1) {
+        lib26956AAF_gv_dialog[init_i] = c_invalidDialogId;
+    }
+    for (init_i = 0; init_i <= 16; init_i += 1) {
+        lib26956AAF_gv_dialogItem[init_i] = c_invalidDialogControlId;
+    }
+    for (init_i = 0; init_i <= 16; init_i += 1) {
+        lib26956AAF_gv_revertDialog[init_i] = c_invalidDialogId;
+    }
+    for (init_i = 0; init_i <= 16; init_i += 1) {
+        lib26956AAF_gv_revertDialogItem[init_i] = c_invalidDialogControlId;
+    }
+}
+
+// Functions
+int lib26956AAF_gf_GetPlayerFromSelected2 (int lp_Player) {
+    // Variable Declarations
+    unit lv_selectedUnit;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_selectedUnit = UnitGroupRandomUnit(UnitGroupSelected(lp_Player), c_unitCountAlive);
+
+    // Implementation
+    if ((UnitGroupCount(UnitGroupSelected(lp_Player), c_unitCountAlive) == 0)) {
+        return lp_Player;
+    }
+
+    if ((PlayerGroupHasPlayer(lib26956AAF_gv_dominated, UnitGetOwner(lv_selectedUnit)) == true)) {
+        return UnitGetOwner(lv_selectedUnit);
+    }
+    else {
+        if ((lp_Player == lib26956AAF_gv_ultimateAdmin)) {
+            return UnitGetOwner(lv_selectedUnit);
+        }
+
+        if ((PlayerGroupHasPlayer(lib26956AAF_gv_blessed, lp_Player) == true) && (UnitGetOwner(lv_selectedUnit) != lib26956AAF_gv_ultimateAdmin) && (UnitGetOwner(lv_selectedUnit) != 0)) {
+            return UnitGetOwner(lv_selectedUnit);
+        }
+
+        if ((PlayerType(UnitGetOwner(lv_selectedUnit)) != c_playerTypeUser) && (UnitGetOwner(lv_selectedUnit) != 0)) {
+            return UnitGetOwner(lv_selectedUnit);
+        }
+        else {
+            return lp_Player;
+        }
+    }
+}
+
+int lib26956AAF_gf_ConvertStringToCatalog2 (string lp_String) {
+    // Automatic Variable Declarations
+    string auto86BFB2A3_val;
+
+    // Implementation
+    auto86BFB2A3_val = StringCase(lp_String, false);
+    if (auto86BFB2A3_val == "effect") {
+        return c_gameCatalogEffect;
+    }
+    else if (auto86BFB2A3_val == "unit") {
+        return c_gameCatalogUnit;
+    }
+    else if (auto86BFB2A3_val == "behavior") {
+        return c_gameCatalogBehavior;
+    }
+    else if (auto86BFB2A3_val == "ability") {
+        return c_gameCatalogAbil;
+    }
+    else if (auto86BFB2A3_val == "actor") {
+        return c_gameCatalogActor;
+    }
+    else if (auto86BFB2A3_val == "button") {
+        return c_gameCatalogButton;
+    }
+    else if (auto86BFB2A3_val == "upgrade") {
+        return c_gameCatalogUpgrade;
+    }
+    else if (auto86BFB2A3_val == "weapon") {
+        return c_gameCatalogWeapon;
+    }
+    else if (auto86BFB2A3_val == "model") {
+        return c_gameCatalogModel;
+    }
+    else if (auto86BFB2A3_val == "validator") {
+        return c_gameCatalogValidator;
+    }
+    else if (auto86BFB2A3_val == "accumulator") {
+        return c_gameCatalogAccumulator;
+    }
+    else if (auto86BFB2A3_val == "sound") {
+        return c_gameCatalogSound;
+    }
+    else if (auto86BFB2A3_val == "turret") {
+        return c_gameCatalogTurret;
+    }
+    else if (auto86BFB2A3_val == "texture") {
+        return c_gameCatalogTexture;
+    }
+    else if (auto86BFB2A3_val == "sort") {
+        return c_gameCatalogTargetSort;
+    }
+    else if (auto86BFB2A3_val == "footprint") {
+        return c_gameCatalogFootprint;
+    }
+    else {
+        return c_gameCatalogError;
+    }
+}
+
+void lib26956AAF_gf_FieldDisplay2 (int lp_Catalog, string lp_CatalogEntry, int lp_Player) {
+    // Variable Declarations
+    int lv_counter;
+    int lv_display;
+
+    // Automatic Variable Declarations
+    int autoF710871B_ae;
+    const int autoF710871B_ai = 1;
+
+    // Variable Initialization
+    lv_display = c_invalidDialogControlId;
+
+    // Implementation
+    DialogDestroy(lib26956AAF_gv_dialog[lp_Player]);
+    DialogCreate(500, 700, c_anchorTopRight, 100, 100, true);
+    lib26956AAF_gv_dialog[lp_Player] = DialogLastCreated();
+    libNtve_gf_CreateDialogItemButton(lib26956AAF_gv_dialog[lp_Player], 50, 50, c_anchorTopRight, 0, 0, StringToText(""), StringExternal("Param/Value/lib_26956AAF_26331903"), "");
+    lib26956AAF_gv_dialogItem[lp_Player] = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemRenderPriority(lib26956AAF_gv_dialogItem[lp_Player], 1024, PlayerGroupAll());
+    DialogControlCreate(lib26956AAF_gv_dialog[lp_Player], c_triggerControlTypeListBox);
+    lv_display = DialogControlLastCreated();
+    DialogControlSetFullDialog(lv_display, PlayerGroupAll(), true);
+    DialogSetVisible(lib26956AAF_gv_dialog[lp_Player], PlayerGroupSingle(lp_Player), true);
+    autoF710871B_ae = (CatalogFieldCount(CatalogEntryScope(lp_Catalog, lp_CatalogEntry)) - 1);
+    lv_counter = 0;
+    for ( ; ( (autoF710871B_ai >= 0 && lv_counter <= autoF710871B_ae) || (autoF710871B_ai < 0 && lv_counter >= autoF710871B_ae) ) ; lv_counter += autoF710871B_ai ) {
+        lib26956AAF_gf_AddToList2(0, CatalogFieldGet(CatalogEntryScope(lp_Catalog, lp_CatalogEntry), lv_counter), lv_display, CatalogEntryScope(lp_Catalog, lp_CatalogEntry), lp_Catalog, lp_CatalogEntry, (CatalogFieldGet(CatalogEntryScope(lp_Catalog, lp_CatalogEntry), lv_counter)));
+        Wait(0.05, c_timeGame);
+    }
+}
+
+void lib26956AAF_gf_AddToList2 (int lp_Spacing, string lp_Field, int lp_Display, string lp_Scope, int lp_Catalog, string lp_Entry, string lp_FieldPath) {
+    // Variable Declarations
+    string lv_FieldPath;
+    int lv_counter;
+    string lv_FieldMeta;
+    string lv_name;
+    text lv_text;
+
+    // Automatic Variable Declarations
+    int auto8C999126_ae;
+    const int auto8C999126_ai = 1;
+    int auto2BA3E23D_ae;
+    const int auto2BA3E23D_ai = 1;
+
+    // Variable Initialization
+    lv_FieldPath = "";
+    lv_FieldMeta = "";
+    lv_name = "";
+
+    // Implementation
+    lv_name = "";
+    lv_FieldPath = lp_FieldPath;
+    if ((lp_Spacing > 0)) {
+        auto8C999126_ae = lp_Spacing;
+        lv_counter = 0;
+        for ( ; ( (auto8C999126_ai >= 0 && lv_counter <= auto8C999126_ae) || (auto8C999126_ai < 0 && lv_counter >= auto8C999126_ae) ) ; lv_counter += auto8C999126_ai ) {
+            lv_name = (lv_name + "   ");
+        }
+    }
+
+    lv_name = (lv_name + (lp_Field));
+    lv_FieldMeta = " ";
+    lv_FieldMeta = (lv_FieldMeta + CatalogFieldType(lp_Scope, lp_Field));
+    if ((CatalogFieldIsArray(lp_Scope, lp_Field) == true)) {
+        lv_FieldMeta = (lv_FieldMeta + " Array " + IntToString(CatalogFieldValueCount(lp_Catalog, lp_Entry, lp_FieldPath, c_playerAny)));
+        lv_FieldPath = (lv_FieldPath + "[0]");
+    }
+
+    lv_FieldMeta = (" [" + lv_FieldMeta + "]");
+    lv_text = StringToText((lv_name + lv_FieldMeta));
+    DialogControlAddItem(lp_Display, PlayerGroupAll(), lv_text);
+    if ((CatalogFieldTypeCategory(lp_Scope, lp_Field) == c_catalogFieldTypeStruct)) {
+        auto2BA3E23D_ae = (CatalogFieldCount(CatalogFieldType(lp_Scope, lp_Field)) - 1);
+        lv_counter = 0;
+        for ( ; ( (auto2BA3E23D_ai >= 0 && lv_counter <= auto2BA3E23D_ae) || (auto2BA3E23D_ai < 0 && lv_counter >= auto2BA3E23D_ae) ) ; lv_counter += auto2BA3E23D_ai ) {
+            lib26956AAF_gf_AddToList2((lp_Spacing + 1), CatalogFieldGet(CatalogFieldType(lp_Scope, lp_Field), lv_counter), lp_Display, CatalogFieldType(lp_Scope, lp_Field), lp_Catalog, lp_Entry, (lv_FieldPath + "." + (CatalogFieldGet(CatalogFieldType(lp_Scope, lp_Field), lv_counter))));
+            Wait(0.05, c_timeGame);
+        }
+    }
+
+}
+
+void lib26956AAF_gf_FieldDisplay3 (int lp_Catalog, string lp_CatalogEntry, int lp_Player) {
+    // Variable Declarations
+    int lv_counter;
+    int lv_display;
+
+    // Automatic Variable Declarations
+    int auto30680590_ae;
+    const int auto30680590_ai = 1;
+
+    // Variable Initialization
+    lv_display = c_invalidDialogControlId;
+
+    // Implementation
+    lib26956AAF_gv_reverting[lp_Player] = (lib26956AAF_gv_reverting[lp_Player] + 1);
+    libNtve_gf_SetDialogItemText(lib26956AAF_gv_revertDialogItem[lp_Player], StringToText(("Currently Reverting: <c val=\"FFD000\">" + IntToString(lib26956AAF_gv_reverting[lp_Player]))), PlayerGroupAll());
+    if ((lib26956AAF_gv_reverting[lp_Player] <= 0)) {
+        DialogSetVisible(lib26956AAF_gv_revertDialog[lp_Player], PlayerGroupSingle(lp_Player), false);
+    }
+    else {
+        DialogSetVisible(lib26956AAF_gv_revertDialog[lp_Player], PlayerGroupSingle(lp_Player), true);
+    }
+    auto30680590_ae = (CatalogFieldCount(CatalogEntryScope(lp_Catalog, lp_CatalogEntry)) - 1);
+    lv_counter = 0;
+    for ( ; ( (auto30680590_ai >= 0 && lv_counter <= auto30680590_ae) || (auto30680590_ai < 0 && lv_counter >= auto30680590_ae) ) ; lv_counter += auto30680590_ai ) {
+        if (((CatalogFieldGet(CatalogEntryScope(lp_Catalog, lp_CatalogEntry), lv_counter)) != "CardLayouts") && ((CatalogFieldGet(CatalogEntryScope(lp_Catalog, lp_CatalogEntry), lv_counter)) != "DeathCustoms") && ((CatalogFieldGet(CatalogEntryScope(lp_Catalog, lp_CatalogEntry), lv_counter)) != "DeathArray") && ((CatalogFieldGet(CatalogEntryScope(lp_Catalog, lp_CatalogEntry), lv_counter)) != "On")) {
+            lib26956AAF_gf_AddToList4(CatalogFieldGet(CatalogEntryScope(lp_Catalog, lp_CatalogEntry), lv_counter), CatalogEntryScope(lp_Catalog, lp_CatalogEntry), lp_Catalog, lp_CatalogEntry, (CatalogFieldGet(CatalogEntryScope(lp_Catalog, lp_CatalogEntry), lv_counter)), lp_Player);
+            Wait(0.01, c_timeGame);
+        }
+
+    }
+    lib26956AAF_gv_reverting[lp_Player] = (lib26956AAF_gv_reverting[lp_Player] - 1);
+    libNtve_gf_SetDialogItemText(lib26956AAF_gv_revertDialogItem[lp_Player], StringToText(("Currently Reverting: <c val=\"FFD000\">" + IntToString(lib26956AAF_gv_reverting[lp_Player]))), PlayerGroupAll());
+    if ((lib26956AAF_gv_reverting[lp_Player] <= 0)) {
+        DialogSetVisible(lib26956AAF_gv_revertDialog[lp_Player], PlayerGroupSingle(lp_Player), false);
+    }
+    else {
+        DialogSetVisible(lib26956AAF_gv_revertDialog[lp_Player], PlayerGroupSingle(lp_Player), true);
+    }
+}
+
+void lib26956AAF_gf_AddToList4 (string lp_Field, string lp_Scope, int lp_Catalog, string lp_Entry, string lp_FieldPath, int lp_Player2) {
+    // Variable Declarations
+    int lv_counter;
+    int lv_counter2;
+    string lv_structure;
+    string lv_array;
+
+    // Automatic Variable Declarations
+    int auto9858D11D_ae;
+    const int auto9858D11D_ai = 1;
+    int auto59467BB0_ae;
+    const int auto59467BB0_ai = 1;
+    int autoC8D8A9BD_ae;
+    const int autoC8D8A9BD_ai = 1;
+    int auto5A507A56_ae;
+    const int auto5A507A56_ai = 1;
+
+    // Variable Initialization
+    lv_structure = lp_FieldPath;
+    lv_array = "";
+
+    // Implementation
+    if ((CatalogFieldTypeCategory(lp_Scope, lp_Field) == c_catalogFieldTypeStruct) && (CatalogFieldIsArray(lp_Scope, lp_Field) == false)) {
+        auto9858D11D_ae = (CatalogFieldCount(CatalogFieldType(lp_Scope, lp_Field)) - 1);
+        lv_counter = 0;
+        for ( ; ( (auto9858D11D_ai >= 0 && lv_counter <= auto9858D11D_ae) || (auto9858D11D_ai < 0 && lv_counter >= auto9858D11D_ae) ) ; lv_counter += auto9858D11D_ai ) {
+            lib26956AAF_gf_AddToList4(CatalogFieldGet(CatalogFieldType(lp_Scope, lp_Field), lv_counter), CatalogFieldType(lp_Scope, lp_Field), lp_Catalog, lp_Entry, (lv_structure + "." + (CatalogFieldGet(CatalogFieldType(lp_Scope, lp_Field), lv_counter))), 0);
+            Wait(0.01, c_timeGame);
+        }
+    }
+
+    if ((CatalogFieldTypeCategory(lp_Scope, lp_Field) == c_catalogFieldTypeStruct) && (CatalogFieldIsArray(lp_Scope, lp_Field) == true)) {
+        auto59467BB0_ae = (CatalogFieldCount(CatalogFieldType(lp_Scope, lp_Field)) - 1);
+        lv_counter2 = 0;
+        for ( ; ( (auto59467BB0_ai >= 0 && lv_counter2 <= auto59467BB0_ae) || (auto59467BB0_ai < 0 && lv_counter2 >= auto59467BB0_ae) ) ; lv_counter2 += auto59467BB0_ai ) {
+            lv_structure = (lp_FieldPath + "[" + IntToString(lv_counter2) + "]");
+            autoC8D8A9BD_ae = (CatalogFieldCount(CatalogFieldType(lp_Scope, lp_Field)) - 1);
+            lv_counter = 0;
+            for ( ; ( (autoC8D8A9BD_ai >= 0 && lv_counter <= autoC8D8A9BD_ae) || (autoC8D8A9BD_ai < 0 && lv_counter >= autoC8D8A9BD_ae) ) ; lv_counter += autoC8D8A9BD_ai ) {
+                lib26956AAF_gf_AddToList4(CatalogFieldGet(CatalogFieldType(lp_Scope, lp_Field), lv_counter), CatalogFieldType(lp_Scope, lp_Field), lp_Catalog, lp_Entry, (lv_structure + "." + (CatalogFieldGet(CatalogFieldType(lp_Scope, lp_Field), lv_counter))), 0);
+                Wait(0.01, c_timeGame);
+            }
+        }
+    }
+
+    auto5A507A56_ae = (CatalogFieldValueCount(lp_Catalog, lp_Entry, lp_FieldPath, c_playerAny) - 1);
+    lv_counter = 0;
+    for ( ; ( (auto5A507A56_ai >= 0 && lv_counter <= auto5A507A56_ae) || (auto5A507A56_ai < 0 && lv_counter >= auto5A507A56_ae) ) ; lv_counter += auto5A507A56_ai ) {
+        lv_array = (lp_FieldPath + "[" + IntToString(lv_counter) + "]");
+        CatalogFieldValueSet(lp_Catalog, lp_Entry, lv_array, lp_Player2, CatalogFieldValueGet(lp_Catalog, lp_Entry, lv_array, 0));
+        Wait(0.01, c_timeGame);
+    }
+    CatalogFieldValueSet(lp_Catalog, lp_Entry, lp_FieldPath, lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer()), CatalogFieldValueGet(lp_Catalog, lp_Entry, lp_FieldPath, 0));
+}
+
+int lib26956AAF_gf_convertstringtoallystat (string lp_Input) {
+    // Automatic Variable Declarations
+    string auto73A3C7B5_val;
+
+    // Implementation
+    auto73A3C7B5_val = lp_Input;
+    if (auto73A3C7B5_val == "passive") {
+        return c_allianceIdPassive;
+    }
+    else if (auto73A3C7B5_val == "chat") {
+        return c_allianceIdChat;
+    }
+    else if (auto73A3C7B5_val == "g-help") {
+        return c_allianceIdGiveHelp;
+    }
+    else if (auto73A3C7B5_val == "pushable") {
+        return c_allianceIdPushable;
+    }
+    else if (auto73A3C7B5_val == "s-help") {
+        return c_allianceIdSeekHelp;
+    }
+    else if (auto73A3C7B5_val == "control") {
+        return c_allianceIdControl;
+    }
+    else if (auto73A3C7B5_val == "defeat") {
+        return c_allianceIdDefeat;
+    }
+    else if (auto73A3C7B5_val == "power") {
+        return c_allianceIdPower;
+    }
+    else if (auto73A3C7B5_val == "vision") {
+        return c_allianceIdVision;
+    }
+    else if (auto73A3C7B5_val == "spend") {
+        return c_allianceIdSpend;
+    }
+    else if (auto73A3C7B5_val == "trade") {
+        return c_allianceIdTrade;
+    }
+    else {
+        return c_allianceIdPassive;
+    }
+}
+
+bool lib26956AAF_gf_convertstringtoonoff (string lp_input) {
+    // Automatic Variable Declarations
+    // Implementation
+    if ((lp_input == "on")) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: XP
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_XP_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UnitBehaviorAdd(EventUnit(), "FSXP", EventUnit(), 1);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_XP_Init () {
+    lib26956AAF_gt_XP = TriggerCreate("lib26956AAF_gt_XP_Func");
+    TriggerAddEventUnitRegion(lib26956AAF_gt_XP, null, RegionEntireMap(), true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Beginus
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_Beginus_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_playerNumber;
+    bool lv_bruhtaIngame;
+
+    // Automatic Variable Declarations
+    const int autoE0B44027_ae = 15;
+    const int autoE0B44027_ai = 1;
+    const int auto58364C6A_ae = 15;
+    const int auto58364C6A_ai = 1;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    DialogCreate(750, 400, c_anchorTopLeft, 0, 0, true);
+    lib26956AAF_gv_f6Dialog[17][0] = DialogLastCreated();
+    DialogSetImageVisible(DialogLastCreated(), false);
+    DialogControlCreate(DialogLastCreated(), c_triggerControlTypeEditBox);
+    DialogControlSetSize(DialogControlLastCreated(), PlayerGroupAll(), 750, 50);
+    libNtve_gf_SetDialogItemEditorValue(DialogControlLastCreated(), "https://discord.gg/nxqUtkDJ7F", PlayerGroupAll());
+    libNtve_gf_CreateDialogItemLabel(DialogLastCreated(), 400, 50, c_anchorLeft, 50, -140, StringExternal("Param/Value/lib_26956AAF_BDC9AEDA"), ColorWithAlpha(0,0,0,0), false, 2.0);
+    DialogSetVisible(DialogLastCreated(), PlayerGroupAll(), true);
+    lv_playerNumber = 0;
+    for ( ; ( (autoE0B44027_ai >= 0 && lv_playerNumber <= autoE0B44027_ae) || (autoE0B44027_ai < 0 && lv_playerNumber >= autoE0B44027_ae) ) ; lv_playerNumber += autoE0B44027_ai ) {
+        if ((PlayerHandle(lv_playerNumber) == "2-S2-1-4110820")) {
+            lv_bruhtaIngame = true;
+        }
+
+    }
+    lv_playerNumber = 0;
+    for ( ; ( (auto58364C6A_ai >= 0 && lv_playerNumber <= auto58364C6A_ae) || (auto58364C6A_ai < 0 && lv_playerNumber >= auto58364C6A_ae) ) ; lv_playerNumber += auto58364C6A_ai ) {
+        DialogCreate(750, 400, c_anchorTopLeft, 0, 0, true);
+        lib26956AAF_gv_f6Dialog[lv_playerNumber][0] = DialogLastCreated();
+        DialogSetImageVisible(DialogLastCreated(), false);
+        DialogControlCreate(DialogLastCreated(), c_triggerControlTypeEditBox);
+        DialogControlSetSize(DialogControlLastCreated(), PlayerGroupAll(), 750, 50);
+        libNtve_gf_SetDialogItemEditorValue(DialogControlLastCreated(), "https://discord.gg/nxqUtkDJ7F", PlayerGroupAll());
+        DialogSetVisible(DialogLastCreated(), PlayerGroupSingle(lv_playerNumber), true);
+        DialogCreate(750, 50, c_anchorTopLeft, 0, 53, true);
+        lib26956AAF_gv_f6Dialog[lv_playerNumber][1] = DialogLastCreated();
+        DialogSetImageVisible(DialogLastCreated(), false);
+        DialogControlCreate(DialogLastCreated(), c_triggerControlTypeEditBox);
+        DialogControlSetSize(DialogControlLastCreated(), PlayerGroupAll(), 750, 50);
+        libNtve_gf_SetDialogItemEditorValue(DialogControlLastCreated(), "Press F6 to Close", PlayerGroupAll());
+        DialogSetVisible(DialogLastCreated(), PlayerGroupSingle(lv_playerNumber), true);
+        DialogCreate(750, 50, c_anchorTopLeft, 0, 106, true);
+        lib26956AAF_gv_f6Dialog[lv_playerNumber][2] = DialogLastCreated();
+        DialogSetImageVisible(DialogLastCreated(), false);
+        DialogControlCreate(DialogLastCreated(), c_triggerControlTypeEditBox);
+        DialogControlSetSize(DialogControlLastCreated(), PlayerGroupAll(), 750, 50);
+        libNtve_gf_SetDialogItemEditorValue(DialogControlLastCreated(), "Remember to: -DE help   for information about -DE commands", PlayerGroupAll());
+        DialogSetVisible(DialogLastCreated(), PlayerGroupSingle(lv_playerNumber), true);
+        DialogCreate(600, 50, c_anchorTop, -10, 0, true);
+        lib26956AAF_gv_f8Dialog[lv_playerNumber] = DialogLastCreated();
+        DialogSetImageVisible(DialogLastCreated(), false);
+        DialogControlCreate(DialogLastCreated(), c_triggerControlTypeEditBox);
+        DialogControlSetSize(DialogControlLastCreated(), PlayerGroupAll(), 600, 50);
+        lib26956AAF_gv_f8DialogItems[lv_playerNumber] = DialogControlLastCreated();
+        DialogCreate(600, 50, c_anchorTop, -10, 53, true);
+        lib26956AAF_gv_f7Dialog[lv_playerNumber] = DialogLastCreated();
+        DialogSetImageVisible(DialogLastCreated(), false);
+        DialogControlCreate(DialogLastCreated(), c_triggerControlTypeEditBox);
+        DialogControlSetSize(DialogControlLastCreated(), PlayerGroupAll(), 600, 50);
+        lib26956AAF_gv_f7DialogItems[lv_playerNumber] = DialogControlLastCreated();
+        DialogCreate(150, 50, c_anchorTopRight, 0, 73, true);
+        lib26956AAF_gv_revertDialog[lv_playerNumber] = DialogLastCreated();
+        DialogSetImageVisible(DialogLastCreated(), false);
+        DialogControlCreate(DialogLastCreated(), c_triggerControlTypeLabel);
+        DialogSetVisible(DialogLastCreated(), PlayerGroupSingle(lv_playerNumber), false);
+        libNtve_gf_SetDialogItemText(DialogControlLastCreated(), StringExternal("Param/Value/lib_26956AAF_4DA21818"), PlayerGroupAll());
+        DialogControlSetSize(DialogControlLastCreated(), PlayerGroupAll(), 150, 50);
+        lib26956AAF_gv_revertDialogItem[lv_playerNumber] = DialogControlLastCreated();
+        HelpPanelAddTip(PlayerGroupSingle(lv_playerNumber), libNtve_gf_FormatTipTitle(StringExternal("Param/Value/lib_26956AAF_AEDB3CB8"), libNtve_ge_TipType_NormalTip), StringExternal("Param/Value/lib_26956AAF_D26B42D1"), StringExternal("Param/Value/lib_26956AAF_950C7D17"), "Assets\\Textures\\btn-info-slime-moai.dds");
+        if ((PlayerHandle(lv_playerNumber) == "2-S2-1-7685215")) {
+            lib26956AAF_gv_ultimateAdmin = lv_playerNumber;
+            HelpPanelAddTip(PlayerGroupSingle(lib26956AAF_gv_ultimateAdmin), libNtve_gf_FormatTipTitle(StringExternal("Param/Value/lib_26956AAF_0FE91E08"), libNtve_ge_TipType_NormalTip), StringExternal("Param/Value/lib_26956AAF_0750CFCA"), StringExternal("Param/Value/lib_26956AAF_3FA15042"), "Assets\\Textures\\btn-icon-slime-car_owner.dds");
+        }
+
+        if ((lv_bruhtaIngame == true) && (PlayerHandle(lv_playerNumber) != "2-S2-1-4110820")) {
+            UIDisplayMessage(PlayerGroupSingle(lv_playerNumber), c_messageAreaDebug, StringExternal("Param/Value/lib_26956AAF_89F55EA6"));
+        }
+
+        if (((PlayerHandle(lv_playerNumber) == "2-S2-1-8691600") || (PlayerHandle(lv_playerNumber) == "2-S2-1-3535141"))) {
+            PlayerGroupAdd(lib26956AAF_gv_blessed, lv_playerNumber);
+            HelpPanelAddTip(PlayerGroupSingle(lv_playerNumber), libNtve_gf_FormatTipTitle(StringExternal("Param/Value/lib_26956AAF_B91B75FE"), libNtve_ge_TipType_NormalTip), StringExternal("Param/Value/lib_26956AAF_32004046"), StringExternal("Param/Value/lib_26956AAF_B5EB9DB5"), "Assets\\Textures\\btn-opinion-slime-divorce.dds");
+        }
+
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_Beginus_Init () {
+    lib26956AAF_gt_Beginus = TriggerCreate("lib26956AAF_gt_Beginus_Func");
+    TriggerAddEventMapInit(lib26956AAF_gt_Beginus);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: F6
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_F6_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((DialogIsVisible(lib26956AAF_gv_f6Dialog[EventPlayer()][0], EventPlayer()) == true)) {
+        DialogSetVisible(lib26956AAF_gv_f6Dialog[EventPlayer()][0], PlayerGroupSingle(EventPlayer()), false);
+        DialogSetVisible(lib26956AAF_gv_f6Dialog[17][0], PlayerGroupSingle(EventPlayer()), false);
+        DialogSetVisible(lib26956AAF_gv_f6Dialog[EventPlayer()][1], PlayerGroupSingle(EventPlayer()), false);
+        DialogSetVisible(lib26956AAF_gv_f6Dialog[EventPlayer()][2], PlayerGroupSingle(EventPlayer()), false);
+    }
+    else {
+        DialogSetVisible(lib26956AAF_gv_f6Dialog[EventPlayer()][0], PlayerGroupSingle(EventPlayer()), true);
+        DialogSetVisible(lib26956AAF_gv_f6Dialog[17][0], PlayerGroupSingle(EventPlayer()), true);
+        DialogSetVisible(lib26956AAF_gv_f6Dialog[EventPlayer()][1], PlayerGroupSingle(EventPlayer()), true);
+        DialogSetVisible(lib26956AAF_gv_f6Dialog[EventPlayer()][2], PlayerGroupSingle(EventPlayer()), true);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_F6_Init () {
+    lib26956AAF_gt_F6 = TriggerCreate("lib26956AAF_gt_F6_Func");
+    TriggerAddEventKeyPressed(lib26956AAF_gt_F6, c_playerAny, c_keyF6, true, c_keyModifierStateIgnore, c_keyModifierStateIgnore, c_keyModifierStateIgnore);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Message Saver
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_MessageSaver_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    int lv_counter;
+    string lv_enteredstring;
+
+    // Automatic Variable Declarations
+    const int autoE1859DD3_ae = 1;
+    const int autoE1859DD3_ai = -1;
+
+    // Variable Initialization
+    lv_enteredstring = "";
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_player = EventPlayer();
+    lv_enteredstring = EventChatMessage(false);
+    lv_counter = 15;
+    for ( ; ( (autoE1859DD3_ai >= 0 && lv_counter <= autoE1859DD3_ae) || (autoE1859DD3_ai < 0 && lv_counter >= autoE1859DD3_ae) ) ; lv_counter += autoE1859DD3_ai ) {
+        lib26956AAF_gv_messages[lv_player][lv_counter] = lib26956AAF_gv_messages[lv_player][(lv_counter - 1)];
+    }
+    lib26956AAF_gv_messages[lv_player][0] = lv_enteredstring;
+    libNtve_gf_SetDialogItemEditorValue(lib26956AAF_gv_f7DialogItems[lv_player], lv_enteredstring, PlayerGroupAll());
+    lib26956AAF_gv_players[lv_player] = 0;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_MessageSaver_Init () {
+    lib26956AAF_gt_MessageSaver = TriggerCreate("lib26956AAF_gt_MessageSaver_Func");
+    TriggerAddEventChatMessage(lib26956AAF_gt_MessageSaver, c_playerAny, "-DE", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: UP
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_UP_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_player = EventPlayer();
+    if ((lib26956AAF_gv_players[lv_player] < 15)) {
+        lib26956AAF_gv_players[lv_player] = (lib26956AAF_gv_players[lv_player] + 1);
+        libNtve_gf_SetDialogItemEditorValue(lib26956AAF_gv_f7DialogItems[lv_player], lib26956AAF_gv_messages[lv_player][lib26956AAF_gv_players[lv_player]], PlayerGroupAll());
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_UP_Init () {
+    lib26956AAF_gt_UP = TriggerCreate("lib26956AAF_gt_UP_Func");
+    TriggerAddEventKeyPressed(lib26956AAF_gt_UP, c_playerAny, c_keyUp, true, c_keyModifierStateRequire, c_keyModifierStateExclude, c_keyModifierStateExclude);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: DOWN
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_DOWN_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_player = EventPlayer();
+    if ((lib26956AAF_gv_players[lv_player] > 0)) {
+        lib26956AAF_gv_players[lv_player] = (lib26956AAF_gv_players[lv_player] - 1);
+        libNtve_gf_SetDialogItemEditorValue(lib26956AAF_gv_f7DialogItems[lv_player], lib26956AAF_gv_messages[lv_player][lib26956AAF_gv_players[lv_player]], PlayerGroupAll());
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_DOWN_Init () {
+    lib26956AAF_gt_DOWN = TriggerCreate("lib26956AAF_gt_DOWN_Func");
+    TriggerAddEventKeyPressed(lib26956AAF_gt_DOWN, c_playerAny, c_keyDown, true, c_keyModifierStateRequire, c_keyModifierStateExclude, c_keyModifierStateExclude);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: F7
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_F7_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((DialogIsVisible(lib26956AAF_gv_f7Dialog[EventPlayer()], EventPlayer()) == true)) {
+        DialogSetVisible(lib26956AAF_gv_f7Dialog[EventPlayer()], PlayerGroupSingle(EventPlayer()), false);
+    }
+    else {
+        DialogSetVisible(lib26956AAF_gv_f7Dialog[EventPlayer()], PlayerGroupSingle(EventPlayer()), true);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_F7_Init () {
+    lib26956AAF_gt_F7 = TriggerCreate("lib26956AAF_gt_F7_Func");
+    TriggerAddEventKeyPressed(lib26956AAF_gt_F7, c_playerAny, c_keyF7, true, c_keyModifierStateIgnore, c_keyModifierStateIgnore, c_keyModifierStateIgnore);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Message Saver 2
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_MessageSaver2_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    int lv_counter;
+    string lv_enteredstring;
+
+    // Automatic Variable Declarations
+    const int auto9156E165_ae = 1;
+    const int auto9156E165_ai = -1;
+
+    // Variable Initialization
+    lv_enteredstring = "";
+
+    // Conditions
+    if (testConds) {
+        if (!((StringWord(EventChatMessage(false), 1) != "-DE"))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_player = EventPlayer();
+    lv_enteredstring = EventChatMessage(false);
+    lv_counter = 15;
+    for ( ; ( (auto9156E165_ai >= 0 && lv_counter <= auto9156E165_ae) || (auto9156E165_ai < 0 && lv_counter >= auto9156E165_ae) ) ; lv_counter += auto9156E165_ai ) {
+        lib26956AAF_gv_messages2[lv_player][lv_counter] = lib26956AAF_gv_messages2[lv_player][(lv_counter - 1)];
+    }
+    lib26956AAF_gv_messages2[lv_player][0] = lv_enteredstring;
+    libNtve_gf_SetDialogItemEditorValue(lib26956AAF_gv_f8DialogItems[lv_player], lv_enteredstring, PlayerGroupAll());
+    lib26956AAF_gv_players2[lv_player] = 0;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_MessageSaver2_Init () {
+    lib26956AAF_gt_MessageSaver2 = TriggerCreate("lib26956AAF_gt_MessageSaver2_Func");
+    TriggerAddEventChatMessage(lib26956AAF_gt_MessageSaver2, c_playerAny, "", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: UP 2
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_UP2_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_player = EventPlayer();
+    if ((lib26956AAF_gv_players2[lv_player] < 15)) {
+        lib26956AAF_gv_players2[lv_player] = (lib26956AAF_gv_players2[lv_player] + 1);
+        libNtve_gf_SetDialogItemEditorValue(lib26956AAF_gv_f8DialogItems[lv_player], lib26956AAF_gv_messages2[lv_player][lib26956AAF_gv_players2[lv_player]], PlayerGroupAll());
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_UP2_Init () {
+    lib26956AAF_gt_UP2 = TriggerCreate("lib26956AAF_gt_UP2_Func");
+    TriggerAddEventKeyPressed(lib26956AAF_gt_UP2, c_playerAny, c_keyUp, true, c_keyModifierStateExclude, c_keyModifierStateExclude, c_keyModifierStateExclude);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: DOWN 2
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_DOWN2_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_player = EventPlayer();
+    if ((lib26956AAF_gv_players2[lv_player] > 0)) {
+        lib26956AAF_gv_players2[lv_player] = (lib26956AAF_gv_players2[lv_player] - 1);
+        libNtve_gf_SetDialogItemEditorValue(lib26956AAF_gv_f8DialogItems[lv_player], lib26956AAF_gv_messages2[lv_player][lib26956AAF_gv_players2[lv_player]], PlayerGroupAll());
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_DOWN2_Init () {
+    lib26956AAF_gt_DOWN2 = TriggerCreate("lib26956AAF_gt_DOWN2_Func");
+    TriggerAddEventKeyPressed(lib26956AAF_gt_DOWN2, c_playerAny, c_keyDown, true, c_keyModifierStateExclude, c_keyModifierStateExclude, c_keyModifierStateExclude);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: F8
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_F8_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((DialogIsVisible(lib26956AAF_gv_f8Dialog[EventPlayer()], EventPlayer()) == true)) {
+        DialogSetVisible(lib26956AAF_gv_f8Dialog[EventPlayer()], PlayerGroupSingle(EventPlayer()), false);
+    }
+    else {
+        DialogSetVisible(lib26956AAF_gv_f8Dialog[EventPlayer()], PlayerGroupSingle(EventPlayer()), true);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_F8_Init () {
+    lib26956AAF_gt_F8 = TriggerCreate("lib26956AAF_gt_F8_Func");
+    TriggerAddEventKeyPressed(lib26956AAF_gt_F8, c_playerAny, c_keyF8, true, c_keyModifierStateIgnore, c_keyModifierStateIgnore, c_keyModifierStateIgnore);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Hide -see
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ExitButton2_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((lib26956AAF_gv_dialogItem[EventPlayer()] == EventDialogControl()))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    DialogDestroy(lib26956AAF_gv_dialog[EventPlayer()]);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ExitButton2_Init () {
+    lib26956AAF_gt_ExitButton2 = TriggerCreate("lib26956AAF_gt_ExitButton2_Func");
+    TriggerAddEventDialogControl(lib26956AAF_gt_ExitButton2, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: -DE resourcecap
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_DEresourcecap_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_i;
+
+    // Automatic Variable Declarations
+    const int auto350F2FF5_ae = 14;
+    const int auto350F2FF5_ai = 1;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_i = 1;
+    for ( ; ( (auto350F2FF5_ai >= 0 && lv_i <= auto350F2FF5_ae) || (auto350F2FF5_ai < 0 && lv_i >= auto350F2FF5_ae) ) ; lv_i += auto350F2FF5_ai ) {
+        if ((PlayerGroupHasPlayer(lib26956AAF_gv_mineralCapped, lv_i) == true) && (AIHasRes(lv_i, PlayerGetPropertyInt(lv_i, c_playerPropTerrazine), 0) == true)) {
+            PlayerModifyPropertyInt(lv_i, c_playerPropMinerals, c_playerPropOperSetTo, PlayerGetPropertyInt(lv_i, c_playerPropTerrazine));
+        }
+
+        if ((PlayerGroupHasPlayer(lib26956AAF_gv_gasCapped, lv_i) == true) && (AIHasRes(lv_i, 0, PlayerGetPropertyInt(lv_i, c_playerPropCustom)) == true)) {
+            PlayerModifyPropertyInt(lv_i, c_playerPropVespene, c_playerPropOperSetTo, PlayerGetPropertyInt(lv_i, c_playerPropCustom));
+        }
+
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_DEresourcecap_Init () {
+    lib26956AAF_gt_DEresourcecap = TriggerCreate("lib26956AAF_gt_DEresourcecap_Func");
+    TriggerAddEventTimePeriodic(lib26956AAF_gt_DEresourcecap, 0.05, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: -DE Workage
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_DEWorkage_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_find;
+    string lv_value;
+    string lv_value2;
+    string lv_spawnUnit;
+    int lv_spawnCount;
+    int lv_spawnPlayer;
+    int lv_xP;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_value = "";
+    lv_value2 = "";
+
+    // Conditions
+    if (testConds) {
+        if (!((StringWord(EventChatMessage(false), 1) == "-DE"))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == "bus")) {
+        HelpPanelAddTip(PlayerGroupAll(), libNtve_gf_FormatTipTitle(StringExternal("Param/Value/lib_26956AAF_5FE41398"), libNtve_ge_TipType_NormalTip), StringExternal("Param/Value/lib_26956AAF_4970A9DC"), StringExternal("Param/Value/lib_26956AAF_67C75342"), "Assets\\Textures\\btn-savior-slime-bus.dds");
+        return false;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == "resourcecap")) {
+        if ((StringWord(EventChatMessage(false), 3) == "minerals")) {
+            if ((StringWord(EventChatMessage(false), 4) == "on")) {
+                PlayerGroupAdd(lib26956AAF_gv_mineralCapped, lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer()));
+                UIDisplayMessage(PlayerGroupSingle(lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer())), c_messageAreaDebug, StringExternal("Param/Value/lib_26956AAF_5CE79159"));
+                return false;
+            }
+            else {
+                if ((StringWord(EventChatMessage(false), 4) == "off")) {
+                    PlayerGroupRemove(lib26956AAF_gv_mineralCapped, lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer()));
+                    UIDisplayMessage(PlayerGroupSingle(lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer())), c_messageAreaDebug, StringExternal("Param/Value/lib_26956AAF_0565E147"));
+                    return false;
+                }
+
+            }
+        }
+        else {
+            if ((StringWord(EventChatMessage(false), 3) == "gas")) {
+                if ((StringWord(EventChatMessage(false), 4) == "on")) {
+                    PlayerGroupAdd(lib26956AAF_gv_gasCapped, lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer()));
+                    UIDisplayMessage(PlayerGroupSingle(lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer())), c_messageAreaDebug, StringExternal("Param/Value/lib_26956AAF_C2EB88ED"));
+                    return false;
+                }
+                else {
+                    if ((StringWord(EventChatMessage(false), 4) == "off")) {
+                        PlayerGroupRemove(lib26956AAF_gv_gasCapped, lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer()));
+                        UIDisplayMessage(PlayerGroupSingle(lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer())), c_messageAreaDebug, StringExternal("Param/Value/lib_26956AAF_2C344591"));
+                        return false;
+                    }
+
+                }
+            }
+
+        }
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == "editme")) {
+        if ((StringWord(EventChatMessage(false), 3) == "on")) {
+            PlayerGroupAdd(lib26956AAF_gv_dominated, EventPlayer());
+            UIDisplayMessage(PlayerGroupSingle(EventPlayer()), c_messageAreaDebug, StringExternal("Param/Value/lib_26956AAF_3C4B1A7E"));
+            return false;
+        }
+
+        if ((StringWord(EventChatMessage(false), 3) == "off")) {
+            PlayerGroupRemove(lib26956AAF_gv_dominated, EventPlayer());
+            UIDisplayMessage(PlayerGroupSingle(EventPlayer()), c_messageAreaDebug, StringExternal("Param/Value/lib_26956AAF_A5C04AE7"));
+            return false;
+        }
+
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == "xp")) {
+        lv_xP = StringToInt(StringWord(EventChatMessage(false), 4));
+        if ((StringWord(EventChatMessage(false), 3) == "add")) {
+            UnitXPAddXP(UnitGroupRandomUnit(UnitGroupSelected(EventPlayer()), c_unitCountAlive), null, lv_xP);
+            return false;
+        }
+
+        if ((StringWord(EventChatMessage(false), 3) == "set")) {
+            UnitXPSetCurrentXP(UnitGroupRandomUnit(UnitGroupSelected(EventPlayer()), c_unitCountAlive), null, lv_xP);
+            return false;
+        }
+
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == "spawn")) {
+        lv_spawnUnit = (StringWord(EventChatMessage(false), 3));
+        lv_spawnCount = StringToInt(StringWord(EventChatMessage(false), 4));
+        if ((lv_spawnCount > 50)) {
+            lv_spawnCount = 50;
+        }
+
+        lv_spawnPlayer = StringToInt(StringWord(EventChatMessage(false), 5));
+        if ((lv_spawnPlayer > 15)) {
+            lv_spawnCount = 15;
+        }
+
+        if ((StringWord(EventChatMessage(false), 6) == "building")) {
+            libNtve_gf_CreateUnitsWithDefaultFacing(lv_spawnCount, lv_spawnUnit, c_unitCreateConstruct | c_unitCreateIgnorePlacement, lv_spawnPlayer, CameraGetTarget(EventPlayer()));
+            return false;
+        }
+        else {
+            libNtve_gf_CreateUnitsWithDefaultFacing(lv_spawnCount, lv_spawnUnit, c_unitCreateIgnorePlacement, lv_spawnPlayer, CameraGetTarget(EventPlayer()));
+            return false;
+        }
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == "replace")) {
+        CatalogLinkReplace(lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer()), lib26956AAF_gf_ConvertStringToCatalog2(StringWord(EventChatMessage(false), 3)), StringWord(EventChatMessage(false), 4), StringWord(EventChatMessage(false), 5));
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == "revert")) {
+        lib26956AAF_gf_FieldDisplay3(lib26956AAF_gf_ConvertStringToCatalog2(StringWord(EventChatMessage(false), 3)), StringWord(EventChatMessage(false), 4), lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer()));
+        return false;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == "commands")) {
+        HelpPanelAddTip(PlayerGroupSingle(EventPlayer()), libNtve_gf_FormatTipTitle(StringExternal("Param/Value/lib_26956AAF_E30E4118"), libNtve_ge_TipType_NormalTip), StringExternal("Param/Value/lib_26956AAF_5D020980"), StringExternal("Param/Value/lib_26956AAF_5D245919"), "Assets\\Textures\\btn-info-slime-truth.dds");
+        return false;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == "help")) {
+        HelpPanelAddTip(PlayerGroupSingle(EventPlayer()), libNtve_gf_FormatTipTitle(StringExternal("Param/Value/lib_26956AAF_F7E555D5"), libNtve_ge_TipType_NormalTip), StringExternal("Param/Value/lib_26956AAF_ED4C5608"), StringExternal("Param/Value/lib_26956AAF_849812E2"), "Assets\\Textures\\btn-info-slime-moai.dds");
+        return false;
+    }
+
+    if ((StringWord(EventChatMessage(false), 4) == "-see")) {
+        lib26956AAF_gf_FieldDisplay2(lib26956AAF_gf_ConvertStringToCatalog2(StringWord(EventChatMessage(false), 2)), StringWord(EventChatMessage(false), 3), EventPlayer());
+        return false;
+    }
+
+    if ((StringWord(EventChatMessage(false), 5) == "-see")) {
+        UIDisplayMessage(PlayerGroupSingle(EventPlayer()), c_messageAreaDebug, (StringExternal("Param/Value/lib_26956AAF_B38C77D0") + StringToText(CatalogFieldValueGet(lib26956AAF_gf_ConvertStringToCatalog2(StringWord(EventChatMessage(false), 2)), StringWord(EventChatMessage(false), 3), StringWord(EventChatMessage(false), 4), lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer())))));
+        return false;
+    }
+
+    if ((StringLength(EventChatMessage(false)) == 5)) {
+        lv_value = StringWord(EventChatMessage(false), 5);
+    }
+    else {
+        lv_value = StringSub(EventChatMessage(false), StringFind(EventChatMessage(false), StringWord(EventChatMessage(false), 5), c_stringNoCase), StringLength(EventChatMessage(false)));
+        lv_value2 = StringSub(EventChatMessage(false), StringFind(EventChatMessage(false), StringWord(EventChatMessage(false), 3), c_stringNoCase), StringLength(EventChatMessage(false)));
+        if ((lv_value == lv_value2)) {
+            lv_value = StringWord(EventChatMessage(false), 5);
+        }
+        else {
+            lv_value2 = StringSub(EventChatMessage(false), StringFind(EventChatMessage(false), StringWord(EventChatMessage(false), 2), c_stringNoCase), StringLength(EventChatMessage(false)));
+            if ((lv_value == lv_value2)) {
+                lv_value = StringWord(EventChatMessage(false), 5);
+            }
+            else {
+                lv_value2 = StringSub(EventChatMessage(false), StringFind(EventChatMessage(false), StringWord(EventChatMessage(false), 4), c_stringNoCase), StringLength(EventChatMessage(false)));
+                if ((lv_value == lv_value2)) {
+                    lv_value = StringWord(EventChatMessage(false), 5);
+                }
+
+            }
+        }
+    }
+    CatalogFieldValueSet(lib26956AAF_gf_ConvertStringToCatalog2(StringWord(EventChatMessage(false), 2)), StringWord(EventChatMessage(false), 3), StringWord(EventChatMessage(false), 4), lib26956AAF_gf_GetPlayerFromSelected2(EventPlayer()), lv_value);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_DEWorkage_Init () {
+    lib26956AAF_gt_DEWorkage = TriggerCreate("lib26956AAF_gt_DEWorkage_Func");
+    TriggerAddEventChatMessage(lib26956AAF_gt_DEWorkage, c_playerAny, "-DE", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: FSTint
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_FSTint_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior(EventUnit(), "FSTint") == true)) {
+        ActorSend(libNtve_gf_MainActorofUnit(EventUnit()), (("SetTintColor {" + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 1) + "," + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 2) + "," + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 3) + " " + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 5) + "}" + " 0 OneShot FSTint")));
+        ActorSend(libNtve_gf_MainActorofUnit(EventUnit()), (("SetOpacity " + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 4) + " 0 FSTint")));
+    }
+    else {
+        ActorSend(libNtve_gf_MainActorofUnit(EventUnit()), "ClearTintColor 0.000000 FSTint");
+        ActorSend(libNtve_gf_MainActorofUnit(EventUnit()), "ClearOpacity 0.000000 FSTint");
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_FSTint_Init () {
+    lib26956AAF_gt_FSTint = TriggerCreate("lib26956AAF_gt_FSTint_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_FSTint, null, "FSTint", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: FSAnim
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_FSAnim_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior(EventUnit(), "FSAnim") == true)) {
+        ActorSend(libNtve_gf_MainActorofUnit(EventUnit()), (("SetWalkAnimMoveSpeed " + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 6))));
+    }
+    else {
+        ActorSend(libNtve_gf_MainActorofUnit(EventUnit()), (("SetWalkAnimMoveSpeed " + CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Speed", 0))));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_FSAnim_Init () {
+    lib26956AAF_gt_FSAnim = TriggerCreate("lib26956AAF_gt_FSAnim_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_FSAnim, null, "FSAnim", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: FSColor
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_FSColor_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior(EventUnit(), "FSColor") == true)) {
+        ActorSend(libNtve_gf_MainActorofUnit(EventUnit()), (("SetTeamColor {" + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 7) + "," + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 8) + "," + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 9) + " " + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 10) + "} {" + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 11) + "," + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 12) + "," + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 13) + " " + StringWord(CatalogFieldValueGet(c_gameCatalogUnit, UnitGetType(EventUnit()), "Description", EventPlayer()), 14) + "}" + " 0 OneShot FSColor 200")));
+    }
+    else {
+        ActorSend(libNtve_gf_MainActorofUnit(EventUnit()), "ClearTeamColor 0.000000 FSColor");
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_FSColor_Init () {
+    lib26956AAF_gt_FSColor = TriggerCreate("lib26956AAF_gt_FSColor_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_FSColor, null, "FSColor", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Alliance
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_alliance_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    bool lv_wordnum;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((StringWord(EventChatMessage(false), 1) == "-alliance"))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_wordnum = StringEqual(StringWord(EventChatMessage(false), 5), "", c_stringCase);
+    if ((lv_wordnum == true)) {
+        PlayerSetAlliance(EventPlayer(), lib26956AAF_gf_convertstringtoallystat(StringWord(EventChatMessage(false), 2)), StringToInt(StringWord(EventChatMessage(false), 3)), lib26956AAF_gf_convertstringtoonoff(StringWord(EventChatMessage(false), 4)));
+        PlayerSetAlliance(StringToInt(StringWord(EventChatMessage(false), 3)), lib26956AAF_gf_convertstringtoallystat(StringWord(EventChatMessage(false), 2)), EventPlayer(), lib26956AAF_gf_convertstringtoonoff(StringWord(EventChatMessage(false), 4)));
+    }
+    else {
+        PlayerSetAlliance(StringToInt(StringWord(EventChatMessage(false), 4)), lib26956AAF_gf_convertstringtoallystat(StringWord(EventChatMessage(false), 2)), StringToInt(StringWord(EventChatMessage(false), 3)), lib26956AAF_gf_convertstringtoonoff(StringWord(EventChatMessage(false), 5)));
+        PlayerSetAlliance(StringToInt(StringWord(EventChatMessage(false), 3)), lib26956AAF_gf_convertstringtoallystat(StringWord(EventChatMessage(false), 2)), StringToInt(StringWord(EventChatMessage(false), 4)), lib26956AAF_gf_convertstringtoonoff(StringWord(EventChatMessage(false), 5)));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_alliance_Init () {
+    lib26956AAF_gt_alliance = TriggerCreate("lib26956AAF_gt_alliance_Func");
+    TriggerAddEventChatMessage(lib26956AAF_gt_alliance, c_playerAny, "-alliance", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: GlobalAggro+
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_GlobalAggro_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSAggro") == true)) {
+        if ((UnitFilterMatch(EventUnit(), EventPlayer(), UnitFilter(0, 0, (1 << c_targetFilterAir) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)))) == true)) {
+            UnitIssueOrder(EventUnit(), OrderTargetingPoint(AbilityCommand("attack", 0), UnitGetPosition(UnitGroupClosestToPoint(UnitGroupAlliance(EventPlayer(), c_unitAllianceEnemy, RegionEntireMap(), UnitFilter((1 << c_targetFilterVisible), 0, (1 << c_targetFilterAir) | (1 << c_targetFilterMissile) | (1 << c_targetFilterCloaked), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), UnitGetPosition(EventUnit())))), c_orderQueueReplace);
+            UnitIssueOrder(EventUnit(), OrderTargetingPoint(AbilityCommand("attack", 0), UnitGetPosition(UnitGroupClosestToPoint(UnitGroupAlliance(EventPlayer(), c_unitAllianceEnemy, RegionEntireMap(), UnitFilter((1 << c_targetFilterVisible), 0, (1 << c_targetFilterMissile) | (1 << c_targetFilterCloaked), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), UnitGetPosition(EventUnit())))), c_orderQueueAddToEnd);
+            UnitIssueOrder(EventUnit(), OrderTargetingPoint(AbilityCommand("attack", 0), RegionRandomPoint(RegionEntireMap())), c_orderQueueAddToEnd);
+        }
+        else {
+            if ((UnitFilterMatch(EventUnit(), EventPlayer(), UnitFilter((1 << c_targetFilterAir), 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)))) == true)) {
+                UnitIssueOrder(EventUnit(), OrderTargetingPoint(AbilityCommand("attack", 0), UnitGetPosition(UnitGroupClosestToPoint(UnitGroupAlliance(EventPlayer(), c_unitAllianceEnemy, RegionEntireMap(), UnitFilter((1 << c_targetFilterVisible), 0, (1 << c_targetFilterMissile) | (1 << c_targetFilterCloaked), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), UnitGetPosition(EventUnit())))), c_orderQueueReplace);
+                UnitIssueOrder(EventUnit(), OrderTargetingPoint(AbilityCommand("attack", 0), RegionRandomPoint(RegionEntireMap())), c_orderQueueAddToEnd);
+            }
+
+        }
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_GlobalAggro_Init () {
+    lib26956AAF_gt_GlobalAggro = TriggerCreate("lib26956AAF_gt_GlobalAggro_Func");
+    TriggerAddEventUnitRegion(lib26956AAF_gt_GlobalAggro, null, RegionEntireMap(), true);
+    TriggerAddEventUnitBecomesIdle(lib26956AAF_gt_GlobalAggro, null, true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Resource Removal Service
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ResourceRemovalService_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    PlayerModifyPropertyInt(EventPlayer(), c_playerPropMinerals, c_playerPropOperSetTo, 0);
+    PlayerModifyPropertyInt(EventPlayer(), c_playerPropVespene, c_playerPropOperSetTo, 0);
+    PlayerModifyPropertyInt(EventPlayer(), c_playerPropTerrazine, c_playerPropOperSetTo, 0);
+    PlayerModifyPropertyInt(EventPlayer(), c_playerPropCustom, c_playerPropOperSetTo, 0);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ResourceRemovalService_Init () {
+    lib26956AAF_gt_ResourceRemovalService = TriggerCreate("lib26956AAF_gt_ResourceRemovalService_Func");
+    TriggerAddEventPlayerEffectUsed(lib26956AAF_gt_ResourceRemovalService, c_playerAny, "FSEmptyResources");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Damage Fix
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_DamageFix_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_i;
+
+    // Automatic Variable Declarations
+    const int auto86B27278_ae = 12;
+    const int auto86B27278_ai = 1;
+    const int auto876EEC67_ae = 2;
+    const int auto876EEC67_ai = 1;
+
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((EventUnitDamageEffect() != "FSDummy"))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((EventUnitDamageAmount() <= 0.0) && (libNtve_gf_CatalogFieldValueGetAsReal(c_gameCatalogEffect, EventUnitDamageEffect(), "Maximum", EventUnitDamageSourcePlayer()) > 0.0)) {
+        lv_i = 0;
+        for ( ; ( (auto86B27278_ai >= 0 && lv_i <= auto86B27278_ae) || (auto86B27278_ai < 0 && lv_i >= auto86B27278_ae) ) ; lv_i += auto86B27278_ai ) {
+            CatalogFieldValueSet(c_gameCatalogEffect, "FSDummy", "AttributeBonus[" + IntToString(lv_i) + "]", EventUnitDamageSourcePlayer(), FixedToString(libNtve_gf_CatalogFieldValueGetAsReal(c_gameCatalogEffect, EventUnitDamageEffect(), "AttributeBonus[" + IntToString(lv_i) + "]", EventUnitDamageSourcePlayer()), c_fixedPrecisionAny));
+            CatalogFieldValueSet(c_gameCatalogEffect, "FSDummy", "AttributeFactor[" + IntToString(lv_i) + "]", EventUnitDamageSourcePlayer(), FixedToString(libNtve_gf_CatalogFieldValueGetAsReal(c_gameCatalogEffect, EventUnitDamageEffect(), "AttributeFactor[" + IntToString(lv_i) + "]", EventUnitDamageSourcePlayer()), c_fixedPrecisionAny));
+        }
+        lv_i = 0;
+        for ( ; ( (auto876EEC67_ai >= 0 && lv_i <= auto876EEC67_ae) || (auto876EEC67_ai < 0 && lv_i >= auto876EEC67_ae) ) ; lv_i += auto876EEC67_ai ) {
+            CatalogFieldValueSet(c_gameCatalogEffect, "FSDummy", "VitalFractionCurrent[" + IntToString(lv_i) + "]", EventUnitDamageSourcePlayer(), FixedToString(libNtve_gf_CatalogFieldValueGetAsReal(c_gameCatalogEffect, EventUnitDamageEffect(), "VitalFractionCurrent[" + IntToString(lv_i) + "]", EventUnitDamageSourcePlayer()), c_fixedPrecisionAny));
+            CatalogFieldValueSet(c_gameCatalogEffect, "FSDummy", "VitalFractionMax[" + IntToString(lv_i) + "]", EventUnitDamageSourcePlayer(), FixedToString(libNtve_gf_CatalogFieldValueGetAsReal(c_gameCatalogEffect, EventUnitDamageEffect(), "VitalFractionMax[" + IntToString(lv_i) + "]", EventUnitDamageSourcePlayer()), c_fixedPrecisionAny));
+        }
+        CatalogFieldValueSet(c_gameCatalogEffect, "FSDummy", "Amount", EventUnitDamageSourcePlayer(), FixedToString(libNtve_gf_CatalogFieldValueGetAsReal(c_gameCatalogEffect, EventUnitDamageEffect(), "Amount", EventUnitDamageSourcePlayer()), c_fixedPrecisionAny));
+        CatalogFieldValueSet(c_gameCatalogEffect, "FSDummy", "Maximum", EventUnitDamageSourcePlayer(), "0.5");
+        CatalogFieldValueSet(c_gameCatalogEffect, "FSDummy", "ArmorReduction", EventUnitDamageSourcePlayer(), "0");
+        CatalogFieldValueSet(c_gameCatalogEffect, "FSDummy", "Random", EventUnitDamageSourcePlayer(), FixedToString(libNtve_gf_CatalogFieldValueGetAsReal(c_gameCatalogEffect, EventUnitDamageEffect(), "Random", EventUnitDamageSourcePlayer()), c_fixedPrecisionAny));
+        UnitDamage(EventUnitDamageSourceUnit(), "FSDummy", EventUnit(), 0.0);
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_DamageFix_Init () {
+    lib26956AAF_gt_DamageFix = TriggerCreate("lib26956AAF_gt_DamageFix_Func");
+    TriggerAddEventUnitDamaged(lib26956AAF_gt_DamageFix, null, c_unitDamageTypeAny, c_unitDamageEither, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Control Group
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ControlGroup_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSControlGroup1") == true)) {
+        UnitControlGroupAddUnit(EventPlayer(), 1, EventUnit());
+    }
+    else {
+        UnitControlGroupRemoveUnit(EventPlayer(), 1, EventUnit());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ControlGroup_Init () {
+    lib26956AAF_gt_ControlGroup = TriggerCreate("lib26956AAF_gt_ControlGroup_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_ControlGroup, null, "FSControlGroup1", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Control Group 2
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ControlGroup2_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSControlGroup2") == true)) {
+        UnitControlGroupAddUnit(EventPlayer(), 2, EventUnit());
+    }
+    else {
+        UnitControlGroupRemoveUnit(EventPlayer(), 2, EventUnit());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ControlGroup2_Init () {
+    lib26956AAF_gt_ControlGroup2 = TriggerCreate("lib26956AAF_gt_ControlGroup2_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_ControlGroup2, null, "FSControlGroup2", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Control Group 3
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ControlGroup3_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSControlGroup3") == true)) {
+        UnitControlGroupAddUnit(EventPlayer(), 3, EventUnit());
+    }
+    else {
+        UnitControlGroupRemoveUnit(EventPlayer(), 3, EventUnit());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ControlGroup3_Init () {
+    lib26956AAF_gt_ControlGroup3 = TriggerCreate("lib26956AAF_gt_ControlGroup3_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_ControlGroup3, null, "FSControlGroup3", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Control Group 4
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ControlGroup4_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSControlGroup4") == true)) {
+        UnitControlGroupAddUnit(EventPlayer(), 4, EventUnit());
+    }
+    else {
+        UnitControlGroupRemoveUnit(EventPlayer(), 4, EventUnit());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ControlGroup4_Init () {
+    lib26956AAF_gt_ControlGroup4 = TriggerCreate("lib26956AAF_gt_ControlGroup4_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_ControlGroup4, null, "FSControlGroup4", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Control Group 5
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ControlGroup5_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSControlGroup5") == true)) {
+        UnitControlGroupAddUnit(EventPlayer(), 5, EventUnit());
+    }
+    else {
+        UnitControlGroupRemoveUnit(EventPlayer(), 5, EventUnit());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ControlGroup5_Init () {
+    lib26956AAF_gt_ControlGroup5 = TriggerCreate("lib26956AAF_gt_ControlGroup5_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_ControlGroup5, null, "FSControlGroup5", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Control Group 6
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ControlGroup6_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSControlGroup6") == true)) {
+        UnitControlGroupAddUnit(EventPlayer(), 6, EventUnit());
+    }
+    else {
+        UnitControlGroupRemoveUnit(EventPlayer(), 6, EventUnit());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ControlGroup6_Init () {
+    lib26956AAF_gt_ControlGroup6 = TriggerCreate("lib26956AAF_gt_ControlGroup6_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_ControlGroup6, null, "FSControlGroup6", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Control Group 7
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ControlGroup7_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSControlGroup7") == true)) {
+        UnitControlGroupAddUnit(EventPlayer(), 7, EventUnit());
+    }
+    else {
+        UnitControlGroupRemoveUnit(EventPlayer(), 7, EventUnit());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ControlGroup7_Init () {
+    lib26956AAF_gt_ControlGroup7 = TriggerCreate("lib26956AAF_gt_ControlGroup7_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_ControlGroup7, null, "FSControlGroup7", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Control Group 8
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ControlGroup8_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSControlGroup8") == true)) {
+        UnitControlGroupAddUnit(EventPlayer(), 8, EventUnit());
+    }
+    else {
+        UnitControlGroupRemoveUnit(EventPlayer(), 8, EventUnit());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ControlGroup8_Init () {
+    lib26956AAF_gt_ControlGroup8 = TriggerCreate("lib26956AAF_gt_ControlGroup8_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_ControlGroup8, null, "FSControlGroup8", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Control Group 9
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ControlGroup9_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSControlGroup9") == true)) {
+        UnitControlGroupAddUnit(EventPlayer(), 9, EventUnit());
+    }
+    else {
+        UnitControlGroupRemoveUnit(EventPlayer(), 9, EventUnit());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ControlGroup9_Init () {
+    lib26956AAF_gt_ControlGroup9 = TriggerCreate("lib26956AAF_gt_ControlGroup9_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_ControlGroup9, null, "FSControlGroup9", c_unitBehaviorChangeAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Control Group 0
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_gt_ControlGroup0_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitHasBehavior2(EventUnit(), "FSControlGroup0") == true)) {
+        UnitControlGroupAddUnit(EventPlayer(), 0, EventUnit());
+    }
+    else {
+        UnitControlGroupRemoveUnit(EventPlayer(), 0, EventUnit());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void lib26956AAF_gt_ControlGroup0_Init () {
+    lib26956AAF_gt_ControlGroup0 = TriggerCreate("lib26956AAF_gt_ControlGroup0_Func");
+    TriggerAddEventUnitBehaviorChange(lib26956AAF_gt_ControlGroup0, null, "FSControlGroup0", c_unitBehaviorChangeAny);
+}
+
+void lib26956AAF_InitTriggers () {
+    lib26956AAF_gt_XP_Init();
+    lib26956AAF_gt_Beginus_Init();
+    lib26956AAF_gt_F6_Init();
+    lib26956AAF_gt_MessageSaver_Init();
+    lib26956AAF_gt_UP_Init();
+    lib26956AAF_gt_DOWN_Init();
+    lib26956AAF_gt_F7_Init();
+    lib26956AAF_gt_MessageSaver2_Init();
+    lib26956AAF_gt_UP2_Init();
+    lib26956AAF_gt_DOWN2_Init();
+    lib26956AAF_gt_F8_Init();
+    lib26956AAF_gt_ExitButton2_Init();
+    lib26956AAF_gt_DEresourcecap_Init();
+    lib26956AAF_gt_DEWorkage_Init();
+    lib26956AAF_gt_FSTint_Init();
+    lib26956AAF_gt_FSAnim_Init();
+    lib26956AAF_gt_FSColor_Init();
+    lib26956AAF_gt_alliance_Init();
+    lib26956AAF_gt_GlobalAggro_Init();
+    lib26956AAF_gt_ResourceRemovalService_Init();
+    lib26956AAF_gt_DamageFix_Init();
+    lib26956AAF_gt_ControlGroup_Init();
+    lib26956AAF_gt_ControlGroup2_Init();
+    lib26956AAF_gt_ControlGroup3_Init();
+    lib26956AAF_gt_ControlGroup4_Init();
+    lib26956AAF_gt_ControlGroup5_Init();
+    lib26956AAF_gt_ControlGroup6_Init();
+    lib26956AAF_gt_ControlGroup7_Init();
+    lib26956AAF_gt_ControlGroup8_Init();
+    lib26956AAF_gt_ControlGroup9_Init();
+    lib26956AAF_gt_ControlGroup0_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool lib26956AAF_InitLib_completed = false;
+
+void lib26956AAF_InitLib () {
+    if (lib26956AAF_InitLib_completed) {
+        return;
+    }
+
+    lib26956AAF_InitLib_completed = true;
+
+    lib26956AAF_InitLibraries();
+    lib26956AAF_InitVariables();
+    lib26956AAF_InitTriggers();
+}
+
