@@ -1,4 +1,5 @@
 include "TriggerLibs/NativeLib"
+
 //--------------------------------------------------------------------------------------------------
 // Library: FS Cortex Additions
 //--------------------------------------------------------------------------------------------------
@@ -746,6 +747,7 @@ void lib26956AAF_gt_F7_Init () {
     lib26956AAF_gt_F7 = TriggerCreate("lib26956AAF_gt_F7_Func");
     TriggerAddEventKeyPressed(lib26956AAF_gt_F7, c_playerAny, c_keyF7, true, c_keyModifierStateIgnore, c_keyModifierStateIgnore, c_keyModifierStateIgnore);
 }
+
 //--------------------------------------------------------------------------------------------------
 // Trigger: Message Saver 2
 //--------------------------------------------------------------------------------------------------
@@ -764,7 +766,7 @@ bool lib26956AAF_gt_MessageSaver2_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (!((StringWord(EventChatMessage(false), 1) != "-DE")) && !((StringContains(EventChatMessage(false),"^\[(.*)\]")))) {
+        if (!((StringWord(EventChatMessage(false), 1) != "-DE"))) {
             return false;
         }
     }
@@ -1655,4 +1657,3 @@ void lib26956AAF_InitLib () {
     lib26956AAF_InitVariables();
     lib26956AAF_InitTriggers();
 }
-
